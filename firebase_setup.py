@@ -2,28 +2,27 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import streamlit as st
 
-# Load credentials from secrets
-firebase_credentials = st.secrets["firebase"]
-
-# Create a dictionary from secrets
-cred_dict = {
-    "type": firebase_credentials["type"],
-    "project_id": firebase_credentials["project_id"],
-    "private_key_id": firebase_credentials["private_key_id"],
-    "private_key": firebase_credentials["private_key"],
-    "client_email": firebase_credentials["client_email"],
-    "client_id": firebase_credentials["client_id"],
-    "auth_uri": firebase_credentials["auth_uri"],
-    "token_uri": firebase_credentials["token_uri"],
-    "auth_provider_x509_cert_url": firebase_credentials["auth_provider_x509_cert_url"],
-    "client_x509_cert_url": firebase_credentials["client_x509_cert_url"],
-    "universe_domain": firebase_credentials["universe_domain"]
-}
-
-# Function to initialize Firebase
 def initialize_firebase():
-    cred = credentials.Certificate(cred_dict)
-    firebase_admin.initialize_app(cred)
+    if not firebase_admin._apps:
+        # Retrieve Firebase credentials from Streamlit secrets
+        firebase_credentials = {
+            "type": "service_account",
+            "project_id": st.secrets["firebase"]["project_id"],
+            "private_key": st.secrets["firebase"]["private_key"].replace("\\n", "\n"),
+            "client_email": st.secrets["firebase"]["client_email"],
+            "client_id": st.secrets["firebase"]["client_id"],
+            "client_x509_cert_url": st.secrets["firebase"]["client_x509_cert_url"],
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        }
 
-# Now you can use Firestore
+        # Initialize Firebase with credentials
+        cred = credentials.Certificate(firebase_credentials)
+        firebase_admin.initialize_app(cred)
+
+# Call this function to ensure Firebase is initialized
+initialize_firebase()
+
+# Get Firestore client
 db = firestore.client()
