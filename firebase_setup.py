@@ -20,9 +20,10 @@ cred_dict = {
     "universe_domain": firebase_credentials["universe_domain"]
 }
 
-# Initialize Firebase with the credentials
-cred = credentials.Certificate(cred_dict)
-firebase_admin.initialize_app(cred)
+# Function to initialize Firebase
+def initialize_firebase():
+    cred = credentials.Certificate(cred_dict)
+    firebase_admin.initialize_app(cred)
 
 # Now you can use Firestore
 db = firestore.client()
