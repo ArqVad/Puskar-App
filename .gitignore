@@ -1,0 +1,15 @@
+# Python
+*.pyc
+__pycache__/
+
+# Virtual Environment
+venv/
+
+# Environment variable files
+.env
+
+# IDE or editor files
+.vscode/
+
+# Model files (like large .pkl files, if you don't want them uploaded)
+*.pkl
