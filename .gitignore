@@ -10,6 +10,3 @@ venv/
 
 # IDE or editor files
 .vscode/
-
-# Model files (like large .pkl files, if you don't want them uploaded)
-*.pkl
