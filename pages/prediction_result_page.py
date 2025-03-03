@@ -10,9 +10,9 @@ st.session_state.page = "Prediction Result"
 make_sidebar()
 
 # Load the saved model and preprocessing objects
-rf_classifier = joblib.load('rf_classifier2.pkl')
-scaler = joblib.load('scaler2.pkl')
-catboost_encoder = joblib.load('catboost_encoder2.pkl')
+rf_classifier = joblib.load('models/rf_classifier2.pkl')
+scaler = joblib.load('models/scaler2.pkl')
+catboost_encoder = joblib.load('models/catboost_encoder2.pkl')
 
 # Define functions to load Firestore data
 
